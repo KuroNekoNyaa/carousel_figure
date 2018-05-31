@@ -11,22 +11,24 @@ var $left_arrow = $('.left-arrow'),
 ** 导航切换
  */
 $pagination.on('click', function (event) {
+    //手动切换的时候就清除自动播放的timer
+    clearInterval(timer);
     index = $pagination.index($(this));
     selectPic(index);
-    //手动切换的时候就清除自动播放的timer
-    clearInterval(timer)
+
 })
 
 /*
 ** 点击箭头切换
  */
 $left_arrow.on('click', function () {
+    clearInterval(timer);
     index--;
     if(index < 0) {
         index = 3
     }
     selectPic(index);
-    clearInterval(timer);
+
 })
 
 $right_arrow.on('click', function () {
@@ -72,3 +74,13 @@ function go() {
     index++;
     selectPic(index)
 }
+
+// hover状态停止自动播放 离开恢复
+ $inner.on('mouseover', function () {
+     clearInterval(timer);
+ });
+
+$inner.on('mouseout', function () {
+    timer = setInterval(go, 3000);
+})
+
